@@ -172,19 +172,25 @@ const PoseDetector = ({ onAlertTriggered }) => {
         canvasCtx.save();
         canvasCtx.clearRect(0, 0, videoWidth, videoHeight);
         
-        // Privacy Constraint: Only draw webcam image if NOT in Emergency Mode
-        if (protocolStateRef.current !== 'EMERGENCY') {
-          canvasCtx.drawImage(results.image, 0, 0, videoWidth, videoHeight);
-        } else {
-          // Emergency Mode: Skeleton Only. Blank dark background.
-          canvasCtx.fillStyle = '#0f172a';
-          canvasCtx.fillRect(0, 0, videoWidth, videoHeight);
-          canvasCtx.font = 'bold 24px Inter';
-          canvasCtx.fillStyle = '#ef4444';
-          canvasCtx.shadowColor = '#ef4444';
-          canvasCtx.shadowBlur = 10;
-          canvasCtx.fillText('EMERGENCY LIVE SESSION - SKELETON ONLY', 40, 40);
-          canvasCtx.shadowBlur = 0;
+        // PRIVACY-FIRST: Tactical Command Center Background (No Raw Video Feed)
+        const gradient = canvasCtx.createRadialGradient(
+          videoWidth / 2, videoHeight / 2, 0,
+          videoWidth / 2, videoHeight / 2, videoWidth / 2
+        );
+        gradient.addColorStop(0, '#0f172a');
+        gradient.addColorStop(1, '#020617');
+        canvasCtx.fillStyle = gradient;
+        canvasCtx.fillRect(0, 0, videoWidth, videoHeight);
+
+        // Subtle Motion Grid
+        canvasCtx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+        canvasCtx.lineWidth = 1;
+        const gridSize = 40;
+        for (let i = 0; i < videoWidth; i += gridSize) {
+          canvasCtx.beginPath(); canvasCtx.moveTo(i, 0); canvasCtx.lineTo(i, videoHeight); canvasCtx.stroke();
+        }
+        for (let i = 0; i < videoHeight; i += gridSize) {
+          canvasCtx.beginPath(); canvasCtx.moveTo(0, i); canvasCtx.lineTo(videoWidth, i); canvasCtx.stroke();
         }
 
         if (results.poseLandmarks) {
@@ -201,14 +207,13 @@ const PoseDetector = ({ onAlertTriggered }) => {
                 setInterventionTimer(10); // 10 second countdown
                 playInterventionAudio();
                 
-                // Clear existing interval if any
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(() => {
                   setInterventionTimer((prev) => {
                     if (prev <= 1) {
                       clearInterval(timerInterval);
                       setProtocol('EMERGENCY');
-                      onAlertTriggered(true); // Escalate to App levels
+                      onAlertTriggered(true); 
                       return 0;
                     }
                     return prev - 1;
@@ -223,7 +228,6 @@ const PoseDetector = ({ onAlertTriggered }) => {
             if (isSafeAct) {
               consecutiveSafeFrames++;
               if (consecutiveSafeFrames >= SAFE_THRESHOLD) {
-                // False alarm or crisis averted
                 setProtocol('MONITORING');
                 consecutiveAlertFrames = 0;
                 consecutiveSafeFrames = 0;
@@ -238,25 +242,35 @@ const PoseDetector = ({ onAlertTriggered }) => {
             drawBoundingBox(canvasCtx, results.poseLandmarks, '#FF0000', 6, 'CRITICAL: EMERGENCY AUTHORITIES NOTIFIED');
           }
 
-          // Always draw the skeleton map
-          let landmarkColor = '#10b981'; // Green for safe
+          // Always draw the skeleton map with GOW effects
+          let landmarkColor = '#00f0ff'; // Default Neon Cyan
           if (currentState === 'INTERVENTION') landmarkColor = '#eab308';
           if (currentState === 'EMERGENCY') landmarkColor = '#FF0000';
 
           if (window.drawConnectors && window.POSE_CONNECTIONS) {
+            canvasCtx.shadowBlur = 15;
+            canvasCtx.shadowColor = landmarkColor;
             window.drawConnectors(canvasCtx, results.poseLandmarks, window.POSE_CONNECTIONS,
-                            {color: landmarkColor, lineWidth: 3});
+                            {color: landmarkColor, lineWidth: 4});
+            canvasCtx.shadowBlur = 0;
           }
           if (window.drawLandmarks) {
             window.drawLandmarks(canvasCtx, results.poseLandmarks,
-                          {color: '#ffffff', lineWidth: 1, radius: 3});
+                          {color: '#ffffff', lineWidth: 1, radius: 4});
           }
 
+          // Perspective Label
+          canvasCtx.fillStyle = 'rgba(255,255,255,0.7)';
+          canvasCtx.font = '700 14px Inter';
+          canvasCtx.fillText('AI PERSPECTIVE: HUMAN POSE ANALYSIS ACTIVE', 24, videoHeight - 24);
+
         } else {
-            // No person detected
             if (protocolStateRef.current === 'MONITORING') {
                consecutiveAlertFrames = 0;
             }
+            canvasCtx.fillStyle = 'rgba(255,255,255,0.4)';
+            canvasCtx.font = '700 14px Inter';
+            canvasCtx.fillText('SEARCHING FOR SUBJECT...', 24, videoHeight - 24);
         }
         canvasCtx.restore();
       });
