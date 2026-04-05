@@ -66,6 +66,15 @@ function App() {
   const handleManualAlert = () => {
     if (window.confirm("CONFIRM MANUAL ALERT: This will notify all emergency services immediately. Proceed?")) {
       setAlertActive(true);
+      
+      // Play Critical Alert Sound
+      try {
+        const audio = new Audio('/critical_alert.mpeg');
+        audio.play();
+      } catch (e) {
+        console.error("Manual Audio Trigger Failed:", e);
+      }
+
       const newAlert = {
         id: Date.now(),
         time: new Date().toLocaleTimeString(),

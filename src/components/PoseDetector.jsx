@@ -46,6 +46,15 @@ const PoseDetector = ({ onAlertTriggered }) => {
     }
   };
 
+  const playCriticalSound = () => {
+    try {
+      const audio = new Audio('/critical_alert.mpeg');
+      audio.play();
+    } catch (e) {
+      console.error("Critical Audio Playback Failed:", e);
+    }
+  };
+
   // Heuristic for alert detection
   const detectHanging = (landmarks) => {
     if (!landmarks || landmarks.length === 0) return false;
@@ -213,6 +222,7 @@ const PoseDetector = ({ onAlertTriggered }) => {
                     if (prev <= 1) {
                       clearInterval(timerInterval);
                       setProtocol('EMERGENCY');
+                      playCriticalSound();
                       onAlertTriggered(true); 
                       return 0;
                     }
