@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Camera, Shield, Heart, Settings, Users, Save, AlertTriangle, Activity, Database, Bell } from 'lucide-react';
 import PoseDetector from './components/PoseDetector';
 import EmergencyResources from './components/EmergencyResources';
+import LandingPage from './components/LandingPage';
 import './App.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('monitor');
+  const [activeTab, setActiveTab] = useState('landing');
   const [alertActive, setAlertActive] = useState(false);
   const [alertHistory, setAlertHistory] = useState([]);
 
@@ -114,7 +115,7 @@ function App() {
           <div className="card">
             <div className="card-header">
               <Activity className="icon" />
-              <h2>Neural Pose Analysis</h2>
+              <h2 className="section-title">Live Camera Feed</h2>
               <span className={`status-badge ${alertActive ? 'warning-status pulse' : 'active-status'}`}>
                 {alertActive ? 'CRITICAL ALERT' : 'AI Monitoring Active'}
               </span>
@@ -130,7 +131,7 @@ function App() {
             <div className="card">
               <div className="card-header">
                 <Database className="icon" style={{color: 'var(--secondary)'}} />
-                <h3>System Integrity</h3>
+                <h3 className="section-title">System Status</h3>
               </div>
               <ul className="status-list">
                 <li><strong>AI Inference:</strong> <span className="text-success status-val">Optimal</span></li>
@@ -144,7 +145,7 @@ function App() {
             <div className="card">
               <div className="card-header">
                 <Bell className="icon" style={{color: 'var(--accent)'}} />
-                <h3>Detection Log</h3>
+                <h3 className="section-title">Activity Log</h3>
               </div>
               <div className="alert-history">
                 {alertHistory.length === 0 ? (
@@ -273,8 +274,13 @@ function App() {
     </section>
   );
 
+  // Render
+  if (activeTab === 'landing') {
+    return <LandingPage onEnter={() => setActiveTab('monitor')} />;
+  }
+
   return (
-    <div className="app-container">
+    <div className="app-container fade-in light-aurora-bg">
       <AlertSignal />
       <header className="header">
         <div className="container flex-between nav-container">
@@ -304,7 +310,7 @@ function App() {
 
       <main className="main-content container">
         <section className="hero-section fade-in">
-          <h1 className="hero-title">Algorithmic Life Protection</h1>
+          <h1 className="hero-title" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>Life-Saving AI Intelligence</h1>
           <p className="hero-subtitle">Utilizing neural pose estimation to protect lives in private spaces. One detection can change everything.</p>
         </section>
 

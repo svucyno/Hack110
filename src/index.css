@@ -40,8 +40,9 @@
   --radius-pill: 9999px;
 
   /* Typography */
-  --font-display: 'Outfit', -apple-system, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', monospace;
   
   /* Animations */
   --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -99,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--text-main);
-  letter-spacing: -0.025em;
+  letter-spacing: 0.02em; /* Clean premium feel */
 }
 
 a {
@@ -110,6 +111,9 @@ a {
 
 button {
   font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 500;
   cursor: pointer;
   border: none;
   outline: none;
