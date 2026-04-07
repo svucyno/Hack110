@@ -1,133 +1,129 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Heart, Shield, Activity, Clock, ArrowRight } from 'lucide-react';
-import './LandingPage.css';
+import React from 'react';
+import { Activity, Clock, Shield, ArrowRight } from 'lucide-react';
 
 const LandingPage = ({ onEnter }) => {
-  const [isFadingOut, setIsFadingOut] = useState(false);
-
-  // Generate random particles once on mount
-  const particles = useMemo(() => {
-    return Array.from({ length: 40 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      char: Math.random() > 0.5 ? '+' : '.',
-      duration: 8 + Math.random() * 7,
-      delay: Math.random() * 10
-    }));
-  }, []);
-
-  const handleEnterClick = () => {
-    setIsFadingOut(true);
-    setTimeout(() => {
-      onEnter();
-    }, 500); // 500ms fade-out transition
-  };
-
   return (
-    <div className={`landing-container ${isFadingOut ? 'fade-out' : ''}`}>
-      
-      {/* BACKGROUND PARTICLES */}
-      <div className="bg-particles">
-        {particles.map(p => (
-          <span 
-            key={p.id} 
-            className="particle" 
-            style={{ 
-              left: `${p.x}%`, 
-              animationDuration: `${p.duration}s`, 
-              animationDelay: `${p.delay}s` 
-            }}
-          >
-            {p.char}
-          </span>
-        ))}
-      </div>
-
-      {/* NAVBAR */}
-      <nav className="landing-nav">
-        <div className="nav-left">
-          <Shield color="#00B5A0" size={24} fill="rgba(0,181,160,0.2)" />
-          HOPE AI
-        </div>
-        <div className="nav-center">
-          Privacy Mode: Skeleton Only | No Recording
-        </div>
-        <div className="nav-right">
-          <div className="nav-link">Configuration</div>
-          <button className="nav-btn" onClick={handleEnterClick}>MONITOR SITE</button>
-        </div>
-      </nav>
-
-      {/* HERO SECTION */}
-      <div className="hero-wrapper">
-        <h2 className="hero-main-title">
-          <span style={{color: '#1A2B4A'}}>Algorithmic Life</span>{' '}
-          <span style={{color: '#00B5A0'}}>AI</span>{' '}
-          <span style={{color: '#A855F7'}}>Intelligence</span>
-        </h2>
-        <p className="hero-small-sub">One alert, one moment, one life saved.</p>
-
-        {/* GIANT HOPE TEXT */}
-        <div className="hope-text-container">
-          <span className="hope-letter letter-h">H</span>
-          <span className="hope-letter letter-o">O</span>
-          <span className="hope-letter letter-p">P</span>
-          <span className="hope-letter letter-e">E</span>
-        </div>
-        
-        <p className="hero-subtitle">Holding On, Protecting Everyone — One Alert, One Life Saved</p>
-        <p className="hero-subscript">AI-POWERED REAL-TIME SAFETY MONITORING SYSTEM</p>
-        
-        <div className="ecg-divider">
-          <svg width="300" height="40" viewBox="0 0 300 40">
-            <path 
-              className="ecg-path" 
-              d="M 0 20 L 70 20 L 85 5 L 105 35 L 125 0 L 145 20 L 300 20" 
-              fill="none" 
-              stroke="#00B5A0" 
-              strokeWidth="2" 
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        
-        {/* STATS ROW */}
-        <div className="stats-row">
-          <div className="stat-card stat-1">
-            <div className="stat-corner-icon teal"><Plus size={18} strokeWidth={3} /></div>
-            <Activity color="#7A9AAF" size={24} />
-            <div className="stat-value">24/7</div>
-            <div className="stat-label">MONITORING</div>
-          </div>
+    <div className="min-h-screen relative overflow-hidden bg-[#eafcfa] font-sans flex flex-col justify-between">
+      {/* Google Fonts Import */}
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap');
           
-          <div className="stat-card stat-2">
-            <div className="stat-corner-icon pink"><Heart size={18} strokeWidth={3} fill="#ec4899" color="#ec4899" /></div>
-            <Clock color="#7A9AAF" size={24} />
-            <div className="stat-value">&lt; 3s</div>
-            <div className="stat-label">ALERT TIME</div>
-          </div>
+          .font-title {
+            font-family: 'Nunito', sans-serif;
+          }
+          
+          .text-glow {
+            text-shadow: 4px 8px 20px rgba(0, 191, 165, 0.3);
+          }
+        `}
+      </style>
 
-          <div className="stat-card stat-3">
-            <div className="stat-corner-icon green"><Plus size={18} strokeWidth={3} color="#22c55e" /></div>
-            <Shield color="#7A9AAF" size={24} />
-            <div className="stat-value">100%</div>
-            <div className="stat-label">PRIVACY SAFE</div>
-          </div>
-        </div>
+      {/* Decorative Background Elements */}
+      {/* Background Blobs */}
+      <div className="absolute bottom-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-pink-300 opacity-15 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-[50%] left-[-10%] w-[35vw] h-[35vw] bg-teal-400 opacity-15 blur-[120px] rounded-full pointer-events-none"></div>
 
-        {/* CTA BUTTON */}
-        <button className="cta-button" onClick={handleEnterClick}>
-          Enter Monitoring System <ArrowRight size={20} strokeWidth={3} />
-        </button>
+      {/* Scattered Plus / Stars */}
+      <div className="absolute top-[15%] left-[10%] text-teal-600 opacity-30 text-xl pointer-events-none">+</div>
+      <div className="absolute top-[25%] right-[15%] text-teal-600 opacity-20 text-3xl pointer-events-none">+</div>
+      <div className="absolute bottom-[20%] left-[20%] text-teal-600 opacity-40 text-sm pointer-events-none">✦</div>
+      <div className="absolute top-[40%] right-[25%] text-teal-600 opacity-30 text-lg pointer-events-none">✦</div>
+      <div className="absolute bottom-[30%] right-[10%] text-teal-600 opacity-25 text-2xl pointer-events-none">+</div>
+      <div className="absolute top-[60%] left-[5%] text-teal-600 opacity-15 text-4xl pointer-events-none">+</div>
+
+      {/* TOP-RIGHT CORNER */}
+      <div className="absolute top-6 right-8 flex items-center gap-2">
+        <Shield className="w-4 h-4 text-teal-500" />
+        <span className="text-teal-600 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase">
+          System Active
+        </span>
+        <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></div>
       </div>
 
-      {/* FOOTER */}
-      <footer className="landing-footer">
-        <div>© HOPE AI SYSTEM — SVU CAMPUS, TIRUPATI</div>
-        <div className="footer-center">
-          🔒 Privacy Mode Active — No Video Stored — GDPR Compliant
+      {/* Main Content Centered */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-4 z-10 py-16">
+        
+        {/* Giant HOPE text */}
+        <h1 className="font-title text-[#00BFA5] text-[100px] sm:text-[140px] md:text-[160px] leading-none text-glow tracking-tight mb-2">
+          HOPE
+        </h1>
+
+        {/* Taglines */}
+        <p className="text-[#1a1a2e] text-base md:text-[18px] font-medium text-center mb-1">
+          Holding On, Protecting Everyone — One Alert, One Life Saved
+        </p>
+        <p className="text-[#00BFA5] text-[10px] md:text-[11px] font-semibold tracking-[0.25em] uppercase text-center mb-8">
+          AI-POWERED REAL-TIME SAFETY MONITORING SYSTEM
+        </p>
+
+        {/* Decorative Divider */}
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <div className="w-[60px] sm:w-[120px] h-[1px] bg-teal-200"></div>
+          <Activity className="w-5 h-5 text-teal-500 stroke-[2.5]" />
+          <div className="w-[60px] sm:w-[120px] h-[1px] bg-teal-200"></div>
         </div>
-        <div>B.TECH/5020/41Y</div>
+
+        {/* Stat Cards Row */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-5 mb-14">
+          
+          {/* Card 1 */}
+          <div className="relative w-[240px] md:w-[220px] bg-white border-[1.5px] border-[#d0f0e8] rounded-2xl p-7 shadow-[0_4px_20px_rgba(0,191,165,0.08)] flex flex-col items-center">
+            <span className="absolute top-4 right-4 text-teal-400 font-bold text-sm">+</span>
+            <Activity className="w-7 h-7 text-[#1a1a2e] mb-3" />
+            <h3 className="text-[40px] font-extrabold text-[#1a1a2e] leading-none mb-1">24/7</h3>
+            <p className="text-[#00BFa5] text-[10px] font-semibold tracking-[0.2em]">MONITORING</p>
+          </div>
+
+          {/* Card 2 */}
+          <div className="relative w-[240px] md:w-[220px] bg-white border-[1.5px] border-[#d0f0e8] rounded-2xl p-7 shadow-[0_4px_20px_rgba(0,191,165,0.08)] flex flex-col items-center">
+            <svg className="absolute top-4 right-4 w-4 h-4 text-pink-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+            <Clock className="w-7 h-7 text-[#1a1a2e] mb-3" />
+            <h3 className="text-[40px] font-extrabold text-[#1a1a2e] leading-none mb-1">&lt; 3s</h3>
+            <p className="text-[#00BFa5] text-[10px] font-semibold tracking-[0.2em]">ALERT TIME</p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="relative w-[240px] md:w-[220px] bg-white border-[1.5px] border-[#d0f0e8] rounded-2xl p-7 shadow-[0_4px_20px_rgba(0,191,165,0.08)] flex flex-col items-center">
+            <span className="absolute top-4 right-4 text-teal-400 font-bold text-sm">+</span>
+            <Shield className="w-7 h-7 text-[#1a1a2e] mb-3" />
+            <h3 className="text-[40px] font-extrabold text-[#1a1a2e] leading-none mb-1">100%</h3>
+            <p className="text-[#00BFa5] text-[10px] font-semibold tracking-[0.2em]">PRIVACY SAFE</p>
+          </div>
+
+        </div>
+
+        {/* CTA Button */}
+        <button 
+          onClick={onEnter}
+          className="group flex items-center justify-center gap-2 w-[280px] py-4 rounded-full bg-gradient-to-r from-[#00BFA5] to-[#00897B] text-white font-semibold text-[16px] shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:brightness-105"
+        >
+          Enter Monitoring System
+          <ArrowRight className="w-5 h-5 ml-1 transition-transform group-hover:translate-x-1" />
+        </button>
+
+      </main>
+
+      {/* BOTTOM BAR */}
+      <footer className="w-full px-6 py-6 mt-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left items-center">
+          
+          <div className="text-gray-500 text-[10px] tracking-[0.1em] uppercase order-2 md:order-1">
+            © HOPE AI SYSTEM — SVU CAMPUS, TIRUPATI
+          </div>
+
+          <div className="flex items-center justify-center gap-1.5 order-1 md:order-2">
+            <Shield className="w-3 h-3 text-teal-500" />
+            <span className="text-gray-500 text-[11px] font-medium">
+              Privacy Mode Active — No Video Stored — GDPR Compliant
+            </span>
+          </div>
+
+          <div className="text-gray-500 text-[10px] tracking-[0.1em] uppercase md:text-right order-3">
+            B.TECH/2026/412
+          </div>
+
+        </div>
       </footer>
     </div>
   );

@@ -340,15 +340,16 @@ const PoseDetector = ({ onAlertTriggered }) => {
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <button 
             onClick={toggleCamera}
+            className="flex items-center gap-2"
             style={{
-              padding: '10px 24px', borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer',
-              fontFamily: 'var(--font-display)', fontWeight: '700', fontSize: '0.9rem', transition: 'var(--transition-smooth)',
-              background: isCameraActive ? 'var(--danger)' : 'var(--primary-neon)', 
-              color: 'var(--bg-color)',
-              boxShadow: isCameraActive ? '0 8px 20px rgba(207, 102, 121, 0.3)' : '0 8px 20px var(--primary-glow)',
+              padding: '10px 24px', borderRadius: '999px', border: 'none', cursor: 'pointer',
+              fontWeight: '700', fontSize: '0.9rem', transition: 'all 0.2s',
+              background: isCameraActive ? '#ef4444' : '#00C896', 
+              color: '#ffffff',
+              boxShadow: isCameraActive ? '0 8px 20px rgba(239, 68, 68, 0.3)' : '0 8px 20px rgba(0, 200, 150, 0.3)',
               backdropFilter: 'blur(10px)'
             }}>
-            {isCameraActive ? 'STOP MONITORING' : 'START MONITORING'}
+            {isCameraActive ? 'STOP FEED' : 'INITIALIZE FEED'}
           </button>
 
           <select
@@ -465,18 +466,10 @@ const PoseDetector = ({ onAlertTriggered }) => {
           )}
         </>
       ) : (
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 15, color: 'rgba(255,255,255,0.6)', fontWeight: 'bold', textAlign: 'center' }}>
-            <p style={{fontSize: '1.2rem', marginBottom: '8px'}}>Camera Feed Offline</p>
-            <p style={{fontSize: '0.9rem', marginBottom: '16px', fontWeight: '400'}}>Click "Open Camera" to begin real-time algorithmic monitoring.</p>
-            <button 
-              onClick={toggleCamera}
-              style={{
-                background: '#14b8a6', color: 'white', border: 'none', padding: '12px 28px',
-                borderRadius: '8px', fontWeight: '800', cursor: 'pointer', transition: 'var(--transition)'
-              }}
-            >
-              Open Camera
-            </button>
+        <div className="flex flex-col items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-15 text-white/50 font-bold text-center w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-4 text-slate-500 animate-bounce"><path d="m6 9 6 6 6-6"/></svg>
+            <h3 className="text-2xl text-slate-400 mb-2 font-extrabold tracking-tight">Stream Offline</h3>
+            <p className="text-sm text-slate-500 font-medium">Activate sequence to begin autonomous monitoring</p>
         </div>
       )}
     </div>

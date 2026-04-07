@@ -1,132 +1,152 @@
 import React from 'react';
-import { MapPin, Phone, ExternalLink, Hospital, Navigation, Radio, Map as MapIcon, Globe, Clock, ShieldCheck, Activity } from 'lucide-react';
+import { MapPin, ShieldCheck, Activity, Navigation, Ambulance, Building2 } from 'lucide-react';
 
 const EmergencyResources = () => {
   const nearbyHospitals = [
     {
-      id: 1,
-      name: "S.V.R.R. Govt Hospital (Ruia)",
-      address: "Alipiri Road, Tirupati",
-      distance: "1.5 km",
-      eta: "5 mins",
-      type: "PRIVATE MULTI-SPECIALITY",
-      contact: "108"
-    },
-    {
-      id: 2,
-      name: "Helios Hospital",
-      address: "Karakambadi Main Road, Tirupati",
-      distance: "4.2 km",
-      eta: "12 mins",
-      type: "PRIVATE MULTI-SPECIALITY",
-      contact: "0877 222 5555"
-    },
-    {
-      id: 3,
-      name: "SVIMS Super Speciality",
-      address: "Alipiri Road, Tirupati",
-      distance: "1.2 km",
+      name: "SGN Hospital",
+      type: "MULTI SPECIALITY",
+      address: "Kadapa - Tirupati Rd, near Kameswaramma Hospital, Rajampet, AP 516115",
+      distance: "1.8 km",
       eta: "4 mins",
-      type: "PRIVATE MULTI-SPECIALITY",
-      contact: "0877 228 7777"
+      phone: "+91 97013 12136",
+      rating: "4.9",
+      mapsUrl: "https://maps.google.com/?cid=18302189154328254826"
     },
     {
-      id: 4,
-      name: "Apollo Hospital",
-      address: "Muthyala Reddy Palle, Tirupati",
-      distance: "5.5 km",
-      eta: "15 mins",
-      type: "PRIVATE MULTI-SPECIALITY",
-      contact: "0877 222 3333"
+      name: "Dr Krishna's Life Hospital",
+      type: "ENT & GENERAL",
+      address: "beside Reliance Smart Bazar, Rajampet, AP 516115",
+      distance: "2.3 km",
+      eta: "6 mins",
+      phone: "+91 97774 18887",
+      rating: "4.8",
+      mapsUrl: "https://maps.google.com/?cid=16747178318288328402"
+    },
+    {
+      name: "Sri Sai Multi Speciality Hospital",
+      type: "ORTHOPAEDIC",
+      address: "Kadapa - Tirupati Rd, near Usman Nagar, Rajampet, AP 516115",
+      distance: "2.1 km",
+      eta: "5 mins",
+      phone: "+91 92946 29294",
+      rating: "4.8",
+      mapsUrl: "https://maps.google.com/?cid=2133385678602667977"
+    },
+    {
+      name: "Government Hospital Rajampet",
+      type: "EMERGENCY & TRAUMA",
+      address: "Rajampet, Andhra Pradesh 516115",
+      distance: "2.0 km",
+      eta: "5 mins",
+      phone: null,
+      rating: "2.7",
+      mapsUrl: "https://maps.google.com/?cid=7159338166911227621"
     }
   ];
 
   return (
-    <div className="emergency-grid-layout fade-in">
-      
-      {/* LEFT CARD: MAP BOX */}
-      <div className="white-card tracking-card slide-in">
-        <div className="card-header flex-between" style={{ marginBottom: '16px' }}>
-          <div>
-            <h2 className="section-title" style={{ fontSize: '1.4rem' }}>📍 Location Tracking</h2>
-            <p style={{ color: '#666', fontSize: '0.85rem', fontWeight: 500, letterSpacing: '0.5px' }}>Live Satellite Feed & Emergency Routes</p>
+    <div className="mt-8 pt-8 border-t border-slate-200">
+      {/* Section Header */}
+      <div className="flex flex-wrap flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div className="flex items-center gap-3">
+          <div className="bg-teal/10 p-2 rounded-full">
+            <MapPin className="w-6 h-6 text-teal" />
           </div>
-          <div className="live-signal pulse badge-pill">
-            <ShieldCheck size={14} /> LIVE SIGNAL FEED
+          <div>
+            <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Location Tracking</h2>
+            <p className="text-sm font-medium text-slate-500">Live Satellite Feed & Emergency Routes</p>
           </div>
         </div>
-        
-        <div className="map-view-container">
-          <div className="map-badges">
-            <div className="map-badge location">
-              <div className="dot blue"></div> <span>SVU CAMPUS</span>
+        <div className="flex items-center gap-2 bg-softred text-white px-4 py-1.5 rounded-full shadow-sm animate-pulse">
+          <ShieldCheck className="w-4 h-4" />
+          <span className="text-xs font-bold tracking-wider">LIVE SIGNAL FEED</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[600px] lg:h-[500px]">
+        {/* LEFT: Google Maps */}
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 overflow-hidden relative flex flex-col">
+          {/* Overlays */}
+          <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
+            <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-slate-200 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+              <span className="text-xs font-bold text-slate-700">Annamacharya University</span>
             </div>
-            <div className="map-badge nearest">
-              <div className="dot red"></div> <span>NEAREST: SVIMS (4m)</span>
+            <div className="bg-ambergold/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-white opacity-80"></div>
+              <span className="text-xs font-bold">Nearest: SGN Hospital (1.8 km)</span>
             </div>
           </div>
           
-          <div className="map-iframe-wrapper" style={{ height: '100%', width: '100%' }}>
+          <div className="w-full h-full bg-slate-200 flex-1">
             <iframe 
               title="Emergency Location Map"
-              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Sri%20Venkateswara%20University,%20Tirupati&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Annamacharya%20Institute%20of%20Technology%20and%20Sciences,%20Rajampet,%20Andhra%20Pradesh%20516115&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
               width="100%" 
               height="100%" 
               frameBorder="0" 
-              style={{ border: 0, filter: 'contrast(110%) saturate(120%)' }} 
+              style={{ border: 0, filter: 'contrast(105%) saturate(110%)' }} 
               allowFullScreen="" 
+              loading="lazy"
             />
           </div>
         </div>
-      </div>
 
-      {/* RIGHT CARD: NEARBY HOSPITALS */}
-      <div className="white-card hospital-card slide-in" style={{ animationDelay: '0.1s' }}>
-        <div className="card-header" style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Activity size={24} style={{ color: '#00B5A0' }} />
-          <h2 className="section-title" style={{ fontSize: '1.4rem' }}>🏥 Nearby Hospitals</h2>
-        </div>
-        
-        <div className="hospital-scroll-area">
-          {nearbyHospitals.map((hospital, index) => (
-            <div key={hospital.id} className="hospital-card-item">
-              <div className="hospital-card-details">
-                <div className="flex-between" style={{ marginBottom: '8px' }}>
-                  <h4 className="hospital-name" style={{ fontWeight: 800, fontSize: '1.05rem', color: '#1A2B4A' }}>{hospital.name}</h4>
-                  <span className="hospital-type-pill">{hospital.type}</span>
+        {/* RIGHT: Nearby Hospitals */}
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 flex flex-col overflow-hidden">
+          <div className="bg-slate-50/80 border-b border-slate-100 flex items-center gap-3 px-6 py-4">
+            <Activity className="w-5 h-5 text-teal" />
+            <h3 className="font-bold text-slate-800 text-lg">Nearby Hospitals</h3>
+          </div>
+          
+          <div className="overflow-y-auto flex-1 p-4 space-y-4">
+            {nearbyHospitals.map((hospital, index) => (
+              <div key={index} className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-slate-400" />
+                    <h4 className="font-extrabold text-slate-900">{hospital.name}</h4>
+                  </div>
+                  <span className="bg-slate-100 text-slate-600 text-[0.65rem] uppercase font-bold px-2 py-0.5 rounded-full tracking-wider border border-slate-200">
+                    {hospital.type}
+                  </span>
                 </div>
-                <p className="hospital-address" style={{ fontSize: '0.85rem', color: '#666', marginBottom: '16px' }}>{hospital.address}</p>
                 
-                <div className="hospital-stats-badges">
-                  <div className="stat-badge">
-                    <span className="stat-label">DIST</span>
-                    <span className="stat-value">{hospital.distance}</span>
+                <p className="text-xs text-slate-500 mb-4 pl-7 line-clamp-1">{hospital.address}</p>
+
+                <div className="grid grid-cols-2 gap-4 mb-4 pl-7">
+                  <div className="bg-teal/5 rounded-lg p-2 border border-teal/10">
+                    <span className="block text-[0.65rem] font-bold text-slate-400 mb-0.5 tracking-wider">DISTANCE</span>
+                    <span className="text-sm font-bold text-teal">{hospital.distance}</span>
                   </div>
-                  <div className="stat-badge">
-                    <span className="stat-label">ETA</span>
-                    <span className="stat-value highlight">{hospital.eta}</span>
+                  <div className="bg-ambergold/5 rounded-lg p-2 border border-ambergold/10">
+                    <span className="block text-[0.65rem] font-bold text-slate-400 mb-0.5 tracking-wider">ETA (TRAFFIC)</span>
+                    <span className="text-sm font-bold text-ambergold">{hospital.eta}</span>
                   </div>
                 </div>
 
-                <div className="hospital-action-grid">
-                  <button className="pill-btn btn-dispatch" onClick={() => window.location.href = `tel:${hospital.contact}`}>
-                    <Radio size={14} /> DISPATCH
+                <div className="grid grid-cols-2 gap-3 pl-7">
+                  <button 
+                    onClick={() => hospital.phone ? window.location.href = `tel:${hospital.phone.replace(/\s+/g, '')}` : alert('No dedicated dispatch number available. Redirecting to 108.')}
+                    className="flex justify-center items-center gap-2 bg-softred hover:bg-red-500 text-white py-2 rounded-lg text-xs font-bold transition-colors shadow-sm"
+                  >
+                    <Ambulance className="w-3.5 h-3.5" /> DISPATCH
                   </button>
                   <a 
-                    href={`https://www.google.com/maps/dir/?api=1&origin=SVU+University,+Tirupati&destination=${encodeURIComponent(hospital.name + ', Tirupati')}&travelmode=driving`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="pill-btn btn-route"
+                    href={hospital.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex justify-center items-center gap-2 bg-teal hover:bg-teal-dark text-white py-2 rounded-lg text-xs font-bold transition-colors shadow-sm"
                   >
-                    <Navigation size={14} /> ROUTE
+                    <Navigation className="w-3.5 h-3.5" /> ROUTE
                   </a>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-      
     </div>
   );
 };

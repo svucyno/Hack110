@@ -59,10 +59,14 @@ const registeredAuthorities = [
 ];
 
 app.post('/api/alert', async (req, res) => {
-  const { timestamp, type } = req.body;
+  const { timestamp, type, emails } = req.body;
+
+  const toAddresses = emails && Array.isArray(emails) && emails.length > 0
+    ? [...new Set([...registeredAuthorities, ...emails])].join(', ')
+    : registeredAuthorities.join(', ');
 
   console.log(`[ALERT] Received critical alert at ${timestamp}`);
-  console.log(`[DEBUG] Attempting to send email from: ${process.env.EMAIL_USER} to: ${registeredAuthorities.join(', ')}`);
+  console.log(`[DEBUG] Attempting to send email from: ${process.env.EMAIL_USER} to: ${toAddresses}`);
 
   // Save to MongoDB
   try {
@@ -78,7 +82,7 @@ app.post('/api/alert', async (req, res) => {
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: registeredAuthorities.join(', '),
+    to: toAddresses,
     subject: 'URGENT: HOPE Project Security Alert Detected',
     html: `
       <div style="font-family: Arial, sans-serif; padding: 25px; color: #1a1a1a; background-color: #fef2f2; border: 2px solid #ef4444; border-radius: 12px;">
